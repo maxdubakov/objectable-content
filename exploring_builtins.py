@@ -35,7 +35,7 @@ class Tree:
         return f"Tree {self.tree_type.title()} {self.age} years old with {len(self.hollows)} hollows in it."
 
     # not particularly correct as it does not look at hollows
-    def __eq__(self, other):
+    def __eq__(self, other: "Tree"):
         return self.age == other.age and self.tree_type == other.tree_type
 
     # also does not copy hollows of a tree
