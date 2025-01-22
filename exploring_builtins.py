@@ -6,6 +6,9 @@ class Hollow:
     def __init__(self, habitat: str):
         self.habitat = habitat
 
+    def __repr__(self):
+        return f"Hollow('{self.habitat}')"
+
 
 class Tree:
     # its good practice to make constructor to only assign values
@@ -42,6 +45,9 @@ class Tree:
     def __copy__(self):
         return Tree(self.age, self.tree_type)
 
+    def __iter__(self):
+        return iter(self.hollows)
+
     @property
     def age(self):
         return self._age
@@ -52,6 +58,10 @@ class Tree:
             raise ValueError("Age cannot be negative")
 
         self._age = age
+
+    def add_hollow(self, hollow: Hollow) -> "Tree":
+        self.hollows.append(hollow)
+        return self
 
 
 if __name__ == "__main__":
@@ -71,14 +81,22 @@ if __name__ == "__main__":
     print(f"Copies equal  : {tree1 == tree1_copy}")
 
     # check age getter/setter
-    print(f"Age            : {tree1.age}")
+    print(f"Age           : {tree1.age}")
 
     # set it to the good value
     tree1.age = 11
-    print(f"Age            : {tree1.age} (set successfully)")
+    print(f"Age           : {tree1.age} (set successfully)")
 
     try:
         print("\nTrying to set age to value that is not allowed... ", end="")
         tree1.age = -1
     except ValueError as e:
         print(e)
+
+    # add hollows using add_hollow
+    tree1.add_hollow(Hollow("owl")).add_hollow(Hollow("squirrel"))
+
+    # iterate over tree's hollows
+    print("Hollows       :")
+    for hollow in tree1:
+        print(f"Hollow        : {hollow}")
